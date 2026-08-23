@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6G SUPER-FAST⚡ PRO FINDER</title>
+    <!-- Library for generating Long Screenshots -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --neon-cyan: #00f2ff;
+            --dark-bg: #0d1117;
+            --inner-bg: #010409;
+        }
+
+        html, body {
+            background-color: var(--dark-bg) !important;
+            margin: 0; padding: 0; min-height: 100vh;
+            color: #e6edf3 !important;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            display: flex; justify-content: center; align-items: flex-start;
+        }
+
+        .main-card {
+            width: 440px; margin: 30px auto; padding: 20px;
+            background-color: var(--dark-bg) !important;
+            border: 2px solid var(--neon-cyan) !important;
+            border-radius: 12px; box-shadow: 0 0 15px var(--neon-cyan);
+        }
+
+        h2 { text-align: center; text-shadow: 0 0 10px var(--neon-cyan); margin-bottom: 20px; color: #fff; font-size: 18px; font-weight: 800; }
+
+        .ui-hide { display: block; }
+        
+        input { 
+            width: 100%; padding: 12px; margin-bottom: 15px;
+            background: #161b22; border: 1px solid #30363d;
+            border-radius: 8px; color: var(--neon-cyan); box-sizing: border-box; outline: none;
+        }
+
+        .btn-box { display: flex; gap: 6px; margin-bottom: 20px; }
+        button { 
+            flex: 1; padding: 10px; font-size: 10px; font-weight: bold; 
+            cursor: pointer; border-radius: 6px; background: transparent;
+            text-transform: uppercase; border: 2px solid; transition: 0.3s;
+        }
+        #searchBtn { border-color: var(--neon-cyan); color: var(--neon-cyan); }
+        #copyBtn { border-color: #ff007b; color: #ff007b; }
+        #printBtn { border-color: #ffc107; color: #ffc107; }
+
+        .found-banner {
+            text-align: center; color: var(--neon-cyan); font-weight: bold;
+            font-size: 15px; margin-bottom: 15px; padding: 10px;
+            border: 1px dashed var(--neon-cyan); border-radius: 8px;
+            background: rgba(0, 242, 255, 0.1);
+        }
+
+        .result-container {
+            background-color: var(--inner-bg) !important; 
+            border: 1px solid #30363d !important;
+            border-radius: 8px; overflow: hidden; margin-bottom: 20px;
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+        td { padding: 8px 12px; border-bottom: 1px solid #1a1f26; color: #00ffaa; vertical-align: top; font-size: 12px; }
+        .label { color: #fff; font-weight: bold; width: 45%; }
+        
+        .footer-credit {
+            text-align: center; color: #ffc107; font-size: 11px; margin-top: 10px;
+        }
+
+        @media print {
+            .ui-hide { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-card" id="capture-area">
+    <h2>⚡ Dᴇsɪɢɴ ʙʏ: 6ɢ Sᴜᴘᴇʀ-Fᴀsᴛ ⚡</h2>
+    
+    <div class="ui-hide" id="ui-controls">
+        <input id="input" placeholder="IFSC ya 6-Digit PINCODE dalo..." maxlength="11" />
+        <div class="btn-box">
+            <button id="searchBtn">🚀 SEARCH</button>
+            <button id="copyBtn">📋 COPY ALL</button>
+            <button id="printBtn">📸 LONG SCREENSHOT</button>
+        </div>
+    </div>
+
+    <div id="res-wrapper"></div>
+</div>
+
+<script>
+    const toUpper = (val) => (val !== null && val !== undefined && val !== "" && val !== false) ? String(val).toUpperCase() : "N/A";
+
+    const backupNumbers = {
+        "SBIN": "18001234", "HDFC": "18002026161", "ICIC": "18001080", 
+        "PUNB": "18001802222", "BARB": "18002584455", "CNRB": "18004250018", 
+        "IOBA": "18004254445", "UBIN": "1800222244", "KKBK": "18602662666"
+    };
+
+    document.getElementById("searchBtn").addEventListener("click", async function () {
+        const input = document.getElementById("input").value.trim().toUpperCase();
+        const wrapper = document.getElementById("res-wrapper");
+        
+        if (!input) return;
+        wrapper.innerHTML = "<p style='text-align:center;'>Searching Live Database... ⚡</p>";
+
+        try {
+            if (/^[A-Z]{4}0[A-Z0-9]{6}$/.test(input)) {
+                const res = await fetch(`https://ifsc.razorpay.com/${input}`);
+                const data = await res.json();
+                
+                let contact = data.CONTACT || "";
+                if(input === "IOBA0003755") contact = "8925953755";
+                if(contact.includes("/")) contact = contact.split(/[/,]/)[0].trim();
+                contact = contact.replace(/\s+/g, '').replace(/^\+91/, '');
+
+                if(!contact || contact === "N/A") {
+                    contact = backupNumbers[input.substring(0, 4)] || "1800-BANK-HELP";
+                }
+
+                wrapper.innerHTML = `
+                <div class="found-banner">FOUND : 1 BANK RECORD</div>
+                <div class="result-container">
+                    <table>
+                        <thead><tr><th colspan="2" style="background:#161b22; color:var(--neon-cyan); padding:10px; font-size:13px; text-align:left; border-bottom:2px solid #30363d;">✅ BANK DETAILS SYNCED</th></tr></thead>
+                        <tbody>
+                            <tr><td class="label">BANK NAME</td><td>${toUpper(data.BANK)}</td></tr>
+                            <tr><td class="label">IFSC CODE</td><td>${toUpper(data.IFSC)}</td></tr>
+                            <tr><td class="label">UPI</td><td>${data.UPI ? "YES" : "NO"}</td></tr>
+                            <tr><td class="label">IMPS</td><td>${data.IMPS ? "YES" : "NO"}</td></tr>
+                            <tr><td class="label">NEFT</td><td>${data.NEFT ? "YES" : "NO"}</td></tr>
+                            <tr><td class="label">RTGS</td><td>${data.RTGS ? "YES" : "NO"}</td></tr>
+                            <tr><td class="label">BRANCH</td><td>${toUpper(data.BRANCH)}</td></tr>                         
+                            <tr><td class="label">MOBILE NO</td><td style="color:#ff007b; font-weight:bold;">${contact}</td></tr>                          
+                            <tr><td class="label">CITY</td><td>${toUpper(data.CITY)}</td></tr>                        
+                            <tr><td class="label">DIST</td><td>${toUpper(data.DISTRICT)}</td></tr>
+                            <tr><td class="label">STATE</td><td>${toUpper(data.STATE)}</td></tr>
+                            <tr><td class="label">ADDRESS</td><td>${toUpper(data.ADDRESS)}</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="footer-credit">⚡ CREDIT: 6G SUPER-FAST ⚡</div>`;
+            } 
+            else if (/^\d{6}$/.test(input)) {
+                const pinRes = await fetch(`https://api.postalpincode.in/pincode/${input}`);
+                const pinJson = await pinRes.json();
+                if (pinJson[0].Status === "Success") {
+                    const offices = pinJson[0].PostOffice;
+                    let htmlContent = `<div class="found-banner">FOUND : ${offices.length} ALL PINCODE DETAILS</div>`;
+                    
+                    offices.forEach((p, index) => {
+                        htmlContent += `
+                        <div class="result-container">
+                            <table>
+                                <thead><tr><th colspan="2" style="background:#161b22; color:var(--neon-cyan); padding:10px; font-size:13px; text-align:left; border-bottom:2px solid #30363d;">📍 LOCATION ${index + 1}: ${toUpper(p.Name)}</th></tr></thead>
+                                <tbody>
+                                    <tr><td class="label">TOWN NAME</td><td>${toUpper(p.Name)}</td></tr>
+                                    <tr><td class="label">VILLAGE</td><td>${toUpper(p.Name)}</td></tr>
+                                    <tr><td class="label">POST OFFICE</td><td>${toUpper(p.Name)}</td></tr>
+                                    <tr><td class="label">BRANCH TYPE</td><td>${toUpper(p.BranchType)}</td></tr>
+                                    <tr><td class="label">DELIVERY</td><td>${toUpper(p.DeliveryStatus)}</td></tr>
+                                    <tr><td class="label">TEHSIL</td><td>${toUpper(p.Block)}</td></tr>
+                                    <tr><td class="label">DISTRICT</td><td>${toUpper(p.District)}</td></tr>
+                                    <tr><td class="label">DIVISION</td><td>${toUpper(p.Division)}</td></tr>
+                                    <tr><td class="label">REGION</td><td>${toUpper(p.Region)}</td></tr>
+                                    <tr><td class="label">CIRCLE</td><td>${toUpper(p.Circle)}</td></tr>
+                                    <tr><td class="label">STATE</td><td>${toUpper(p.State)}</td></tr>
+                                    <tr><td class="label">PINCODE</td><td>${input}</td></tr>
+                                </tbody>
+                            </table>
+                        </div>`;
+                    });
+                    wrapper.innerHTML = htmlContent + `<div class="footer-credit">⚡ CREDIT: 6G SUPER-FAST ⚡</div>`;
+                }
+            }
+        } catch (err) { wrapper.innerHTML = "<p style='text-align:center; color:red;'>❌ RECORD NOT FOUND!</p>"; }
+    });
+
+    document.getElementById("copyBtn").addEventListener("click", () => {
+        const wrapper = document.getElementById("res-wrapper");
+        if (!wrapper.innerText) return;
+        const containers = document.querySelectorAll('.result-container');
+        let copyText = "⚡ CREDIT: 6G SUPER-FAST ⚡\n\n";
+        containers.forEach((container) => {
+            const rows = container.querySelectorAll('tr');
+            rows.forEach(row => {
+                const label = row.querySelector('.label')?.innerText || "";
+                const value = row.cells[1]?.innerText || "";
+                if(label) copyText += `${label}\t: ${value}\n`;
+            });
+            copyText += "-----------------------\n";
+        });
+        copyText += "\n⚡ CREDIT: 6G SUPER-FAST ⚡";
+        const tempInput = document.createElement("textarea");
+        tempInput.value = copyText;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+        alert("✅ ALL DATA COPIED!");
+    });
+
+    // NEW LOGIC FOR SEAMLESS LONG SCREENSHOT
+    document.getElementById("printBtn").addEventListener("click", () => {
+        const captureArea = document.getElementById("capture-area");
+        const uiControls = document.getElementById("ui-controls");
+        const wrapper = document.getElementById("res-wrapper");
+
+        if (!wrapper.innerText) {
+            alert("⚠️ Pehle kuch search karo!");
+            return;
+        }
+
+        // Hide inputs/buttons temporarily so they don't show up in the image
+        uiControls.style.display = "none";
+        
+        // Capture the card as a high-quality image
+        html2canvas(captureArea, {
+            backgroundColor: "#0d1117",
+            scale: 2 // Boosts resolution
+        }).then(canvas => {
+            // Create a fake link to trigger the download
+            const link = document.createElement("a");
+            link.download = "6G_Result_Long.png";
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+            
+            // Bring the inputs back
+            uiControls.style.display = "block";
+        }).catch(err => {
+            alert("❌ Screenshot lene me problem hui!");
+            uiControls.style.display = "block";
+        });
+    });
+</script>
+
+</body>
+</html>
