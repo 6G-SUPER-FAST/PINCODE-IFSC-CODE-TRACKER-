@@ -3,73 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>6G SUPER-FAST⚡ PRO FINDER</title>
+    <title>6G SUPER-FAST PRO FINDER</title>
     <!-- Library for generating Long Screenshots -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
-            --neon-cyan: #00f2ff;
-            --dark-bg: #0d1117;
-            --inner-bg: #010409;
+            --bg-body: #0f172a; /* Slate 900 */
+            --bg-card: #1e293b; /* Slate 800 */
+            --bg-input: #0f172a;
+            --border-color: #334155; /* Slate 700 */
+            --text-primary: #f8fafc; /* Slate 50 */
+            --text-secondary: #94a3b8; /* Slate 400 */
+            --accent-blue: #3b82f6; /* Blue 500 */
+            --accent-green: #10b981; /* Emerald 500 */
+            --accent-indigo: #6366f1; /* Indigo 500 */
         }
 
         html, body {
-            background-color: var(--dark-bg) !important;
+            background-color: var(--bg-body) !important;
             margin: 0; padding: 0; min-height: 100vh;
-            color: #e6edf3 !important;
+            color: var(--text-primary) !important;
         }
 
         body { 
-            font-family: 'Segoe UI', Arial, sans-serif; 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
             display: flex; justify-content: center; align-items: flex-start;
         }
 
         .main-card {
-            width: 440px; margin: 30px auto; padding: 20px;
-            background-color: var(--dark-bg) !important;
-            border: 2px solid var(--neon-cyan) !important;
-            border-radius: 12px; box-shadow: 0 0 15px var(--neon-cyan);
+            width: 100%; max-width: 650px; margin: 40px auto; padding: 32px;
+            background-color: var(--bg-card) !important;
+            border: 1px solid var(--border-color) !important;
+            border-radius: 16px; 
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
         }
 
-        h2 { text-align: center; text-shadow: 0 0 10px var(--neon-cyan); margin-bottom: 20px; color: #fff; font-size: 18px; font-weight: 800; }
+        h2 { 
+            text-align: center; margin-bottom: 24px; color: var(--text-primary); 
+            font-size: 20px; font-weight: 700; letter-spacing: 0.5px;
+        }
+        
+        h2 span { color: var(--accent-blue); }
 
         .ui-hide { display: block; }
         
         input { 
-            width: 100%; padding: 12px; margin-bottom: 15px;
-            background: #161b22; border: 1px solid #30363d;
-            border-radius: 8px; color: var(--neon-cyan); box-sizing: border-box; outline: none;
+            width: 100%; padding: 14px 16px; margin-bottom: 20px;
+            background: var(--bg-input); border: 1px solid var(--border-color);
+            border-radius: 10px; color: var(--text-primary); font-size: 15px;
+            box-sizing: border-box; outline: none; transition: all 0.2s ease;
         }
 
-        .btn-box { display: flex; gap: 6px; margin-bottom: 20px; }
-        button { 
-            flex: 1; padding: 10px; font-size: 10px; font-weight: bold; 
-            cursor: pointer; border-radius: 6px; background: transparent;
-            text-transform: uppercase; border: 2px solid; transition: 0.3s;
+        input:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
         }
-        #searchBtn { border-color: var(--neon-cyan); color: var(--neon-cyan); }
-        #copyBtn { border-color: #ff007b; color: #ff007b; }
-        #printBtn { border-color: #ffc107; color: #ffc107; }
+
+        .btn-box { display: flex; gap: 12px; margin-bottom: 24px; }
+        
+        button { 
+            flex: 1; padding: 12px; font-size: 12px; font-weight: 600; 
+            cursor: pointer; border-radius: 8px; border: none;
+            color: #ffffff; text-transform: uppercase; letter-spacing: 0.5px;
+            transition: transform 0.1s, opacity 0.2s;
+        }
+        
+        button:active { transform: scale(0.98); }
+        button:hover { opacity: 0.9; }
+
+        #searchBtn { background-color: var(--accent-blue); }
+        #copyBtn { background-color: var(--accent-green); }
+        #printBtn { background-color: var(--accent-indigo); }
 
         .found-banner {
-            text-align: center; color: var(--neon-cyan); font-weight: bold;
-            font-size: 15px; margin-bottom: 15px; padding: 10px;
-            border: 1px dashed var(--neon-cyan); border-radius: 8px;
-            background: rgba(0, 242, 255, 0.1);
+            text-align: center; color: var(--accent-green); font-weight: 600;
+            font-size: 14px; margin-bottom: 16px; padding: 12px;
+            border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px;
+            background: rgba(16, 185, 129, 0.1);
         }
 
         .result-container {
-            background-color: var(--inner-bg) !important; 
-            border: 1px solid #30363d !important;
-            border-radius: 8px; overflow: hidden; margin-bottom: 20px;
+            background-color: var(--bg-body) !important; 
+            border: 1px solid var(--border-color) !important;
+            border-radius: 10px; overflow: hidden; margin-bottom: 24px;
         }
 
         table { width: 100%; border-collapse: collapse; }
-        td { padding: 8px 12px; border-bottom: 1px solid #1a1f26; color: #00ffaa; vertical-align: top; font-size: 12px; }
-        .label { color: #fff; font-weight: bold; width: 45%; }
+        td { padding: 12px 16px; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); vertical-align: top; font-size: 14px; }
+        tr:last-child td { border-bottom: none; }
+        .label { color: var(--text-primary); font-weight: 600; width: 40%; }
         
         .footer-credit {
-            text-align: center; color: #ffc107; font-size: 11px; margin-top: 10px;
+            text-align: center; color: var(--text-secondary); font-size: 12px; margin-top: 16px; font-weight: 500;
         }
 
         @media print {
@@ -80,14 +106,14 @@
 <body>
 
 <div class="main-card" id="capture-area">
-    <h2>⚡ Dᴇsɪɢɴ ʙʏ: 6ɢ Sᴜᴘᴇʀ-Fᴀsᴛ ⚡</h2>
+    <h2>Design by: <span>6G Super-Fast</span></h2>
     
     <div class="ui-hide" id="ui-controls">
         <input id="input" placeholder="IFSC ya 6-Digit PINCODE dalo..." maxlength="11" />
         <div class="btn-box">
-            <button id="searchBtn">🚀 SEARCH</button>
-            <button id="copyBtn">📋 COPY ALL</button>
-            <button id="printBtn">📸 LONG SCREENSHOT</button>
+            <button id="searchBtn">🚀 Search</button>
+            <button id="copyBtn">📋 Copy All</button>
+            <button id="printBtn">📸 Long Screenshot</button>
         </div>
     </div>
 
@@ -108,7 +134,7 @@
         const wrapper = document.getElementById("res-wrapper");
         
         if (!input) return;
-        wrapper.innerHTML = "<p style='text-align:center;'>Searching Live Database... ⚡</p>";
+        wrapper.innerHTML = "<p style='text-align:center; color: var(--text-secondary);'>Searching Live Database... ⚡</p>";
 
         try {
             if (/^[A-Z]{4}0[A-Z0-9]{6}$/.test(input)) {
@@ -128,7 +154,7 @@
                 <div class="found-banner">FOUND : 1 BANK RECORD</div>
                 <div class="result-container">
                     <table>
-                        <thead><tr><th colspan="2" style="background:#161b22; color:var(--neon-cyan); padding:10px; font-size:13px; text-align:left; border-bottom:2px solid #30363d;">✅ BANK DETAILS SYNCED</th></tr></thead>
+                        <thead><tr><th colspan="2" style="background:var(--bg-input); color:var(--accent-blue); padding:12px 16px; font-size:14px; text-align:left; border-bottom:1px solid var(--border-color);">✅ BANK DETAILS SYNCED</th></tr></thead>
                         <tbody>
                             <tr><td class="label">BANK NAME</td><td>${toUpper(data.BANK)}</td></tr>
                             <tr><td class="label">IFSC CODE</td><td>${toUpper(data.IFSC)}</td></tr>
@@ -137,7 +163,7 @@
                             <tr><td class="label">NEFT</td><td>${data.NEFT ? "YES" : "NO"}</td></tr>
                             <tr><td class="label">RTGS</td><td>${data.RTGS ? "YES" : "NO"}</td></tr>
                             <tr><td class="label">BRANCH</td><td>${toUpper(data.BRANCH)}</td></tr>                         
-                            <tr><td class="label">MOBILE NO</td><td style="color:#ff007b; font-weight:bold;">${contact}</td></tr>                          
+                            <tr><td class="label">MOBILE NO</td><td style="color:var(--accent-green); font-weight:600;">${contact}</td></tr>                          
                             <tr><td class="label">CITY</td><td>${toUpper(data.CITY)}</td></tr>                        
                             <tr><td class="label">DIST</td><td>${toUpper(data.DISTRICT)}</td></tr>
                             <tr><td class="label">STATE</td><td>${toUpper(data.STATE)}</td></tr>
@@ -158,7 +184,7 @@
                         htmlContent += `
                         <div class="result-container">
                             <table>
-                                <thead><tr><th colspan="2" style="background:#161b22; color:var(--neon-cyan); padding:10px; font-size:13px; text-align:left; border-bottom:2px solid #30363d;">📍 LOCATION ${index + 1}: ${toUpper(p.Name)}</th></tr></thead>
+                                <thead><tr><th colspan="2" style="background:var(--bg-input); color:var(--accent-blue); padding:12px 16px; font-size:14px; text-align:left; border-bottom:1px solid var(--border-color);">📍 LOCATION ${index + 1}: ${toUpper(p.Name)}</th></tr></thead>
                                 <tbody>
                                     <tr><td class="label">TOWN NAME</td><td>${toUpper(p.Name)}</td></tr>
                                     <tr><td class="label">VILLAGE</td><td>${toUpper(p.Name)}</td></tr>
@@ -179,7 +205,7 @@
                     wrapper.innerHTML = htmlContent + `<div class="footer-credit">⚡ CREDIT: 6G SUPER-FAST ⚡</div>`;
                 }
             }
-        } catch (err) { wrapper.innerHTML = "<p style='text-align:center; color:red;'>❌ RECORD NOT FOUND!</p>"; }
+        } catch (err) { wrapper.innerHTML = "<p style='text-align:center; color:#ef4444; font-weight:600;'>❌ RECORD NOT FOUND!</p>"; }
     });
 
     document.getElementById("copyBtn").addEventListener("click", () => {
@@ -222,7 +248,7 @@
         
         // Capture the card as a high-quality image
         html2canvas(captureArea, {
-            backgroundColor: "#0d1117",
+            backgroundColor: "#0f172a",
             scale: 2 // Boosts resolution
         }).then(canvas => {
             // Create a fake link to trigger the download
